@@ -1,4 +1,8 @@
+import boto3
 import json
+import os
+from subprocess import call
+
 
 class Payload(object):
     def __init__(self, j):
@@ -32,3 +36,7 @@ data = response.get('Messages')[0].get('Body')
 p = Payload(data)
 print(p.action)
 print(p.payload)
+
+command = "livestreamer --yes-run-as-root --http-header=Client-ID=fcbmhjqkely7kwcq4fg09btmhr907e --player-passthrough=http,hls,rtmp --player=\"python /stream2chromecast/stream2chromecast.py -devicename 192.168.1.158 -playurl\" twitch.tv/%s best" %(p.payload)
+
+os.system(command)
