@@ -1,4 +1,8 @@
-import boto3
+import json
+
+class Payload(object):
+    def __init__(self, j):
+        self.__dict__ = json.loads(j)
 
 # Create SQS client
 sqs = boto3.client('sqs', region_name="us-east-1")
@@ -24,4 +28,7 @@ response = sqs.receive_message(
     WaitTimeSeconds=20
 )
 
-print(response.get('Body'))
+data = response.get('Messages')[0].get('Body')
+p = Payload(data)
+print(p.action)
+print(p.payload)
