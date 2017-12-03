@@ -24,4 +24,4 @@ response = sqs.receive_message(
     WaitTimeSeconds=20
 )
 
-print(response)
+print(response.Body)
